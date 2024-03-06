@@ -4,26 +4,43 @@
 #include <algorithm>
 
 class Student {
-private:
+public:
     std::string name;
     long int id;
     std::string groupName;
 
-public:
-    Student(std::string n, long int i, std::string g) : name(n), id(i), groupName(g) {}
-
-    std::string getGroupName() const {
-        return groupName;
-    }
+    Student(const std::string& n, long int i, const std::string& g) : name(n), id(i), groupName(g) {}
 };
 
-void printGroupCounts(const std::vector<Student>& students) {
+std::vector<Student> inputStudents(int n) {
+    std::vector<Student> students;
+    students.reserve(n);
+
+    for (int i = 0; i < n; ++i) {
+        std::string name, group;
+        long int id;
+
+        std::cout << "Input student details (name, id, group): ";
+        std::cin >> name >> id >> group;
+
+        students.emplace_back(name, id, group);
+    }
+
+    return students;
+}
+
+std::map<std::string, int> countGroups(const std::vector<Student>& students) {
     std::map<std::string, int> groupCounts;
 
     for (const auto& student : students) {
-        groupCounts[student.getGroupName()]++;
+        groupCounts[student.groupName]++;
     }
 
+    return groupCounts;
+}
+
+void printGroupCounts(const std::map<std::string, int>& groupCounts) {
+    std::cout << "Output:" << std::endl;
     for (const auto& pair : groupCounts) {
         std::cout << pair.first << ":" << pair.second << std::endl;
     }
@@ -34,17 +51,9 @@ int main() {
     std::cout << "Input number of students: ";
     std::cin >> n;
 
-    std::vector<Student> students;
-    for (int i = 0; i < n; ++i) {
-        std::string name, group;
-        long int id;
-        std::cout << "Input student details (name, id, group): ";
-        std::cin >> name >> id >> group;
-        students.emplace_back(name, id, group);
-    }
-
-    std::cout << "Output:" << std::endl;
-    printGroupCounts(students);
+    std::vector<Student> students = inputStudents(n);
+    std::map<std::string, int> groupCounts = countGroups(students);
+    printGroupCounts(groupCounts);
 
     return 0;
 }

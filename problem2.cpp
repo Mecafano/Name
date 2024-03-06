@@ -21,17 +21,19 @@ public:
         hours %= 24;
     }
 
-    void printTime() {
+    void printTime() const {
         std::cout << hours << ":" << minutes << ":" << seconds << std::endl;
     }
 };
 
 int main() {
     int hours, minutes, seconds;
+
     std::cout << "Input hours, minutes, seconds: ";
     std::cin >> hours >> minutes >> seconds;
 
     Timer timer(hours, minutes, seconds);
+
     std::cout << "Output: ";
     timer.printTime();
 

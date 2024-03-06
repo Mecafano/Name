@@ -1,52 +1,57 @@
 #include <iostream>
-using namespace std;
 
 class Animal {
 protected:
     int energy;
+
 public:
-    Animal(int e = 50) : energy(e) {}
+    Animal(int initial_energy = 50) : energy(initial_energy) {}
 
     void sleep() {
-        cout << "I'm sleeping." << endl;
+        std::cout << "I'm sleeping." << std::endl;
         energy++;
     }
 
     void eat() {
-        cout << "I'm eating." << endl;
+        std::cout << "I'm eating." << std::endl;
         energy++;
     }
 
-    int getEnergy() {
+    int getEnergy() const {
         return energy;
     }
 };
 
 class Dog : public Animal {
 private:
-    string name;
+    std::string name;
+
 public:
-    Dog(string n) : name(n) {}
+    Dog(const std::string& dog_name) : name(dog_name) {}
 
     void bark() {
-        cout << "Bark!" << endl;
+        std::cout << "Bark!" << std::endl;
         energy--;
     }
 
     void run() {
-        cout << "Running!" << endl;
+        std::cout << "Running!" << std::endl;
         energy -= 3;
     }
 };
 
 int main() {
     Dog dog1("Max");
-    for(int i = 4; i < 9; i++) {
+
+    for (int i = 4; i < 9; i++) {
         dog1.sleep();
         dog1.run();
     }
+
     dog1.eat();
     dog1.bark();
-    cout << dog1.getEnergy() << endl;
+
+    std::cout << dog1.getEnergy() << std::endl;
+
     return 0;
 }
