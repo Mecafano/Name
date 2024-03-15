@@ -1,57 +1,37 @@
 #include <iostream>
+#include <string>
 
-class Animal {
-protected:
-    int energy;
+using namespace std;
 
-public:
-    Animal(int initial_energy = 50) : energy(initial_energy) {}
-
-    void sleep() {
-        std::cout << "I'm sleeping." << std::endl;
-        energy++;
+void printTriangle(int n) {
+    for (int i = n; i > 0; --i) {
+        cout << string(i, '*') << endl;
     }
+}
 
-    void eat() {
-        std::cout << "I'm eating." << std::endl;
-        energy++;
+void printSquare(int n) {
+    for (int i = 0; i < n; ++i) {
+        cout << string(n, '*') << endl;
     }
+}
 
-    int getEnergy() const {
-        return energy;
-    }
-};
-
-class Dog : public Animal {
-private:
-    std::string name;
-
-public:
-    Dog(const std::string& dog_name) : name(dog_name) {}
-
-    void bark() {
-        std::cout << "Bark!" << std::endl;
-        energy--;
-    }
-
-    void run() {
-        std::cout << "Running!" << std::endl;
-        energy -= 3;
-    }
-};
+void squareValue(int n) {
+    cout << n * n << endl;
+}
 
 int main() {
-    Dog dog1("Max");
+    int n;
+    cout << "Enter a value for n: ";
+    cin >> n;
 
-    for (int i = 4; i < 9; i++) {
-        dog1.sleep();
-        dog1.run();
-    }
+    cout << "Triangle Pattern:" << endl;
+    printTriangle(n);
 
-    dog1.eat();
-    dog1.bark();
+    cout << "\nSquare Pattern:" << endl;
+    printSquare(n);
 
-    std::cout << dog1.getEnergy() << std::endl;
+    cout << "\nSquare value of " << n << endl;
+    squareValue(n);
 
     return 0;
 }
