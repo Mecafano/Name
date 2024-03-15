@@ -6,10 +6,10 @@ using namespace std;
 int linearSearch(const vector<int>& vec, int num) {
     for (int i = 0; i < vec.size(); ++i) {
         if (vec[i] == num) {
-            return i; // Found the element, return its index
+            return i;
         }
     }
-    return -1; // Element not found
+    return -1;
 }
 
 int main() {
