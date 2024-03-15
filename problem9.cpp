@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -8,11 +7,6 @@ struct Student {
     int id;
     int totalGrade;
 };
-
-bool compareStudents(const Student &a, const Student &b) {
-    if (a.totalGrade != b.totalGrade)
-        return a.totalGrade > b.totalGrade;
-}
 
 int main() {
     int N;
@@ -30,14 +24,19 @@ int main() {
     }
 
 
-    sort(students.begin(), students.end(), compareStudents);
-
-
-    int rank = 0;
+    int id2TotalGrade = 0;
     for (int i = 0; i < N; ++i) {
         if (students[i].id == 2) {
-            rank = i + 1;
+            id2TotalGrade = students[i].totalGrade;
             break;
+        }
+    }
+
+
+    int rank = 1;
+    for (int i = 0; i < N; ++i) {
+        if (students[i].totalGrade > id2TotalGrade) {
+            rank++;
         }
     }
 
