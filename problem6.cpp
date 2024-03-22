@@ -1,35 +1,43 @@
 #include <iostream>
 #include <vector>
-
+#include <climits>
+#include <cmath>
 using namespace std;
 
-void countSmaller(const vector<int>& sequence) {
-    int n = sequence.size();
-    for (int i = 0; i < n; ++i) {
-        int count = 0;
-        for (int j = 0; j < n; ++j) {
-            if (sequence[j] < sequence[i]) {
-                count++;
+int minDistance(vector<int>& nums, int x, int y) {
+    int minDist = INT_MAX;
+    int prev = -1;
+
+    for (int i = 0; i < nums.size(); i++) {
+        if (nums[i] == x || nums[i] == y) {
+            if (prev != -1 && nums[i] != nums[prev]) {
+                minDist = min(minDist, i - prev);
             }
+            prev = i;
         }
-        cout << count << " ";
     }
-    cout << endl;
+
+    return minDist;
 }
 
 int main() {
     int n;
-    cout << "Enter the number of elements in the sequence: ";
+    cout << "Enter the number of elements: ";
     cin >> n;
 
-    vector<int> sequence(n);
-    cout << "Enter the sequence of numbers: ";
-    for (int i = 0; i < n; ++i) {
-        cin >> sequence[i];
+    vector<int> nums(n);
+    cout << "Enter " << n << " integer numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
     }
 
-    cout << "Counts of smaller numbers for each value: ";
-    countSmaller(sequence);
+    int x, y;
+    cout << "Enter two numbers x and y: ";
+    cin >> x >> y;
+
+    int distance = minDistance(nums, x, y);
+
+    cout << "Output: " << distance << endl;
 
     return 0;
 }

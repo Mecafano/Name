@@ -1,38 +1,36 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
-int linearSearch(const vector<int>& vec, int num) {
-    for (int i = 0; i < vec.size(); ++i) {
-        if (vec[i] == num) {
-            return i;
+void replaceWithMax(vector<int> &arr) {
+    int n = arr.size();
+    int maxSoFar = arr[n - 1]; // Initialize the maximum value as the last element
+    for (int i = n - 2; i >= 0; i--) {
+        if (arr[i] > maxSoFar) {
+            maxSoFar = arr[i]; // Update the maximum value if the current element is greater
         }
+        arr[i] = maxSoFar; // Replace each element with the maximum value encountered so far
     }
-    return -1;
+    arr[n - 1] = -1; // Replace the last element with -1
 }
 
 int main() {
     int n;
     cout << "Enter the number of elements: ";
     cin >> n;
-
-    vector<int> elements(n);
-    cout << "Enter the elements: ";
-    for (int i = 0; i < n; ++i) {
-        cin >> elements[i];
+    vector<int> arr(n);
+    cout << "Enter " << n << " integer numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
 
-    int num;
-    cout << "Enter the number to search: ";
-    cin >> num;
+    replaceWithMax(arr);
 
-    int index = linearSearch(elements, num);
-    if (index != -1) {
-        cout << "The number " << num << " is found at index: " << index << endl;
-    } else {
-        cout << "The number " << num << " is not found in the vector." << endl;
+    cout << "Output: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
+    cout << endl;
 
     return 0;
 }

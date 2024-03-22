@@ -1,37 +1,82 @@
 #include <iostream>
-#include <string>
-
 using namespace std;
 
-void printTriangle(int n) {
-    for (int i = n; i > 0; --i) {
-        cout << string(i, '*') << endl;
+class Node {
+public:
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int data) {
+        this->data = data;
+        next = NULL;
+        prev = NULL;
     }
-}
+};
 
-void printSquare(int n) {
-    for (int i = 0; i < n; ++i) {
-        cout << string(n, '*') << endl;
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+public:
+    LinkedList() {
+        head = NULL;
+        tail = NULL;
     }
-}
 
-void squareValue(int n) {
-    cout << n * n << endl;
-}
+    void insertBack(int data) {
+        Node* newNode = new Node(data);
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+
+    void reverse() {
+        Node* current = head;
+        Node* temp = NULL;
+        while (current != NULL) {
+            temp = current->prev;
+            current->prev = current->next;
+            current->next = temp;
+            current = current->prev;
+        }
+        if (temp != NULL) {
+            head = temp->prev;
+        }
+    }
+
+    void display() {
+        Node* temp = head;
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
 
 int main() {
-    int n;
-    cout << "Enter a value for n: ";
+    int n, data;
+    cout << "Enter the number of elements: ";
     cin >> n;
+    LinkedList list;
+    cout << "Enter " << n << " numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> data;
+        list.insertBack(data);
+    }
 
-    cout << "Triangle Pattern:" << endl;
-    printTriangle(n);
+    cout << "Original list: ";
+    list.display();
 
-    cout << "\nSquare Pattern:" << endl;
-    printSquare(n);
+    list.reverse();
 
-    cout << "\nSquare value of " << n << endl;
-    squareValue(n);
+    cout << "Reversed list: ";
+    list.display();
 
     return 0;
 }
