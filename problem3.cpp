@@ -1,46 +1,95 @@
 #include <iostream>
-#include <vector>
-
 using namespace std;
 
-struct Student {
-    int id;
-    int totalGrade;
+class Node {
+public:
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int data) {
+        this->data = data;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+public:
+    LinkedList() {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void insertBack(int data) {
+        Node* newNode = new Node(data);
+        if (head == NULL) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+
+    void deleteAtPosition(int pos) {
+        if (head == NULL)
+            return;
+
+        Node* current = head;
+        for (int i = 1; current != NULL && i < pos; i++) {
+            current = current->next;
+        }
+
+        if (current == NULL)
+            return;
+
+        if (current == head) {
+            head = current->next;
+            if (head != NULL)
+                head->prev = NULL;
+            delete current;
+        } else {
+            current->prev->next = current->next;
+            if (current->next != NULL)
+                current->next->prev = current->prev;
+            delete current;
+        }
+    }
+
+    void display() {
+        Node* temp = head;
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
 };
 
 int main() {
-    int N;
-    cout << "Enter the number of students: ";
-    cin >> N;
-
-    vector<Student> students(N);
-
-
-    for (int i = 0; i < N; ++i) {
-        students[i].id = i + 1;
-        int grade1, grade2, grade3;
-        cin >> grade1 >> grade2 >> grade3;
-        students[i].totalGrade = grade1 + grade2 + grade3;
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+    LinkedList list;
+    cout << "Enter " << n << " integer numbers: ";
+    for (int i = 0; i < n; i++) {
+        int num;
+        cin >> num;
+        list.insertBack(num);
     }
 
+    int pos;
+    cout << "Enter the position of the element to delete: ";
+    cin >> pos;
 
-    int id2TotalGrade = 0;
-    for (int i = 0; i < N; ++i) {
-        if (students[i].id == 2) {
-            id2TotalGrade = students[i].totalGrade;
-            break;
-        }
-    }
+    list.deleteAtPosition(pos);
 
-
-    int rank = 1;
-    for (int i = 0; i < N; ++i) {
-        if (students[i].totalGrade > id2TotalGrade) {
-            rank++;
-        }
-    }
-
-    cout << "Output: " << rank << endl;
+    cout << "Output: ";
+    list.display();
 
     return 0;
 }
