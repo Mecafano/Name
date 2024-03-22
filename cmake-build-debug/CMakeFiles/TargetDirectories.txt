@@ -1,0 +1,8 @@
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem4.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem5.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem6.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem7.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem8.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/problem9.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/shohr/CLionProjects/Name/cmake-build-debug/CMakeFiles/rebuild_cache.dir
