@@ -1,94 +1,68 @@
 #include <iostream>
-#include <climits>
+#include <string>
 using namespace std;
+
+class Leaf {
+public:
+    string msg;
+    Leaf(string msg) {
+        this->msg = msg;
+    }
+};
 
 class Node {
 public:
-    int data;
-    Node* next;
-    Node* prev;
-    Node(int data) {
-        this->data = data;
-        next = NULL;
-        prev = NULL;
+    int value;
+    Node *left;
+    Node *right;
+    Leaf *leftL;
+    Leaf *rightL;
+    Node(int val) {
+        value = val;
+        left = NULL;
+        right = NULL;
+        leftL = NULL;
+        rightL = NULL;
     }
 };
 
-class LinkedList {
-private:
-    Node* head;
-    Node* tail;
-public:
-    LinkedList() {
-        head = NULL;
-        tail = NULL;
+Node* buildTree() {
+    Node *root = new Node(2);
+    root->left = new Node(1);
+    root->right = new Node(3);
+
+    root->left->leftL = new Leaf("Value is less than 2");
+    root->left->rightL = new Leaf("Value is less than 2");
+    root->right->leftL = new Leaf("Value is greater than or equal to 2");
+    root->right->rightL = new Leaf("Value is greater than or equal to 2");
+
+    return root;
+}
+
+void traverseTree(Node *root, int n) {
+    if (root == NULL) {
+        cout << "Invalid decision tree!" << endl;
+        return;
     }
 
-    void insertBack(int data) {
-        Node* newNode = new Node(data);
-        if (head == NULL) {
-            head = newNode;
-            tail = newNode;
+    while (root != NULL) {
+        if (n < root->value) {
+            if (root->leftL != NULL)
+                cout << root->leftL->msg << endl;
+            root = root->left;
         } else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            if (root->rightL != NULL)
+                cout << root->rightL->msg << endl;
+            root = root->right;
         }
     }
-
-    int size() {
-        int count = 0;
-        Node* temp = head;
-        while (temp != NULL) {
-            count++;
-            temp = temp->next;
-        }
-        return count;
-    }
-
-    int maxElement() {
-        if (head == NULL)
-            return 0;
-        int maxVal = INT_MIN;
-        Node* temp = head;
-        while (temp != NULL) {
-            maxVal = max(maxVal, temp->data);
-            temp = temp->next;
-        }
-        return maxVal;
-    }
-
-    int minElement() {
-        if (head == NULL)
-            return 0;
-        int minVal = INT_MAX;
-        Node* temp = head;
-        while (temp != NULL) {
-            minVal = min(minVal, temp->data);
-            temp = temp->next;
-        }
-        return minVal;
-    }
-
-    int firstElement() {
-        if (head == NULL)
-            return 0;
-        return head->data;
-    }
-};
+}
 
 int main() {
-    LinkedList list;
-    int num;
-    cout << "Enter integers to insert into the list, and input a character to stop: ";
-    while (cin >> num) {
-        list.insertBack(num);
-    }
-
-    cout << "Maximum number: " << list.maxElement() << endl;
-    cout << "First element: " << list.firstElement() << endl;
-    cout << "Size of the list: " << list.size() << endl;
-    cout << "Minimum element: " << list.minElement() << endl;
-
+    Node *root = buildTree();
+    int n;
+    cout << "Enter a value: ";
+    cin >> n;
+    traverseTree(root, n);
     return 0;
 }

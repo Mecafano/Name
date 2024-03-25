@@ -5,53 +5,58 @@ class Node {
 public:
     int data;
     Node* next;
-    Node* prev;
     Node(int data) {
         this->data = data;
-        next = NULL;
-        prev = NULL;
+        next = nullptr;
     }
 };
 
 class LinkedList {
 private:
     Node* head;
-    Node* tail;
 public:
     LinkedList() {
-        head = NULL;
-        tail = NULL;
+        head = nullptr;
     }
 
-    void insertBack(int data) {
+    void insert(int data) {
         Node* newNode = new Node(data);
-        if (head == NULL) {
+        if (!head) {
             head = newNode;
-            tail = newNode;
         } else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            Node* temp = head;
+            while (temp->next) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
         }
     }
 
-    void reverse() {
+    void sortAscending() {
+        if (!head)
+            return;
+
         Node* current = head;
-        Node* temp = NULL;
-        while (current != NULL) {
-            temp = current->prev;
-            current->prev = current->next;
-            current->next = temp;
-            current = current->prev;
-        }
-        if (temp != NULL) {
-            head = temp->prev;
+        Node* index = nullptr;
+        int temp;
+
+        while (current != nullptr) {
+            index = current->next;
+            while (index != nullptr) {
+                if (current->data > index->data) {
+                    temp = current->data;
+                    current->data = index->data;
+                    index->data = temp;
+                }
+                index = index->next;
+            }
+            current = current->next;
         }
     }
 
     void display() {
         Node* temp = head;
-        while (temp != NULL) {
+        while (temp) {
             cout << temp->data << " ";
             temp = temp->next;
         }
@@ -60,23 +65,13 @@ public:
 };
 
 int main() {
-    int n, data;
-    cout << "Enter the number of elements: ";
-    cin >> n;
     LinkedList list;
-    cout << "Enter " << n << " numbers: ";
-    for (int i = 0; i < n; i++) {
+    int n, data;
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
         cin >> data;
-        list.insertBack(data);
+        list.insert(data);
     }
 
     cout << "Original list: ";
     list.display();
-
-    list.reverse();
-
-    cout << "Reversed list: ";
-    list.display();
-
-    return 0;
-}
