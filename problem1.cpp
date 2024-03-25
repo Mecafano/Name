@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 class Leaf {
@@ -27,35 +26,40 @@ public:
 };
 
 Node* buildTree() {
-    Node *root = new Node(2);
-    root->left = new Node(1);
-    root->right = new Node(3);
+    Node *root = new Node(100);
+    root->left = new Node(50);
+    root->right = new Node(150);
 
-    root->left->leftL = new Leaf("Value is less than 2");
-    root->left->rightL = new Leaf("Value is less than 2");
-    root->right->leftL = new Leaf("Value is greater than or equal to 2");
-    root->right->rightL = new Leaf("Value is greater than or equal to 2");
+    root->left->left = new Node(25);
+    root->left->right = new Node(75);
+    root->right->left = new Node(125);
+    root->right->right = new Node(175);
+
+    root->left->leftL = new Leaf("Speed");
+    root->left->rightL = new Leaf("Strength");
+    root->right->leftL = new Leaf("Power");
+    root->right->rightL = new Leaf("Vision");
 
     return root;
 }
 
-void traverseTree(Node *root, int n) {
+string traverseTree(Node *root, int n) {
     if (root == NULL) {
-        cout << "Invalid decision tree!" << endl;
-        return;
+        return "Invalid decision tree!";
     }
 
     while (root != NULL) {
         if (n < root->value) {
             if (root->leftL != NULL)
-                cout << root->leftL->msg << endl;
+                return root->leftL->msg;
             root = root->left;
         } else {
             if (root->rightL != NULL)
-                cout << root->rightL->msg << endl;
+                return root->rightL->msg;
             root = root->right;
         }
     }
+    return "Invalid decision tree!";
 }
 
 int main() {
@@ -63,6 +67,6 @@ int main() {
     int n;
     cout << "Enter a value: ";
     cin >> n;
-    traverseTree(root, n);
+    cout << traverseTree(root, n) << endl;
     return 0;
 }
