@@ -1,36 +1,108 @@
 #include <iostream>
-#include <vector>
+#include <unordered_set>
 using namespace std;
 
-void replaceWithMax(vector<int> &arr) {
-    int n = arr.size();
-    int maxSoFar = arr[n - 1]; // Initialize the maximum value as the last element
-    for (int i = n - 2; i >= 0; i--) {
-        if (arr[i] > maxSoFar) {
-            maxSoFar = arr[i]; // Update the maximum value if the current element is greater
-        }
-        arr[i] = maxSoFar; // Replace each element with the maximum value encountered so far
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) {
+        this->data = data;
+        next = nullptr;
     }
-    arr[n - 1] = -1; // Replace the last element with -1
-}
+};
+
+class LinkedList {
+private:
+    Node* head;
+public:
+    LinkedList() {
+        head = nullptr;
+    }
+
+    void insert(int data) {
+        Node* newNode = new Node(data);
+        if (!head) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    void deleteDuplicates() {
+        if (!head)
+            return;
+
+        unordered_set<int> seen;
+        Node* current = head;
+        Node* prev = nullptr;
+
+        while (current != nullptr) {
+            if (seen.find(current->data) != seen.end()) {
+                prev->next = current->next;
+                delete current;
+                current = prev->next;
+            } else {
+                seen.insert(current->data);
+                prev = current;
+                current = current->next;
+            }
+        }
+    }
+
+    void sort() {
+        if (!head || !head->next)
+            return;
+
+        Node* current = head;
+        Node* index = nullptr;
+        int temp;
+
+        while (current != nullptr) {
+            index = current->next;
+            while (index != nullptr) {
+                if (current->data > index->data) {
+                    temp = current->data;
+                    current->data = index->data;
+                    index->data = temp;
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
+
+    void display() {
+        Node* temp = head;
+        while (temp) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
 
 int main() {
-    int n;
-    cout << "Enter the number of elements: ";
+    LinkedList list;
+    int n, data;
     cin >> n;
-    vector<int> arr(n);
-    cout << "Enter " << n << " integer numbers: ";
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    for (int i = 0; i < n; ++i) {
+        cin >> data;
+        list.insert(data);
     }
 
-    replaceWithMax(arr);
+    cout << "Original list: ";
+    list.display();
 
-    cout << "Output: ";
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
+    list.sort();
+    list.deleteDuplicates();
+
+    cout << "List after removing duplicates and sorting: ";
+    list.display();
 
     return 0;
 }
