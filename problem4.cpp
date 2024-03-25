@@ -33,7 +33,7 @@ public:
     }
 
     void sortAscending() {
-        if (!head)
+        if (!head || !head->next)
             return;
 
         Node* current = head;
@@ -73,5 +73,9 @@ int main() {
         list.insert(data);
     }
 
-    cout << "Original list: ";
+    list.sortAscending();
+
     list.display();
+
+    return 0;
+}
