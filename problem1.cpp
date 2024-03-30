@@ -6,7 +6,7 @@ double calculate_an(int n) {
     if (n == 1)
         return 4.0;
     else
-        return (calculate_an(n - 1) - 1) / 2.0;
+        return (calculate_an(n - 1) - 1.0) / 2.0;
 }
 
 int main() {
