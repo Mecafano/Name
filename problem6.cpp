@@ -1,43 +1,32 @@
 #include <iostream>
-#include <vector>
-#include <climits>
-#include <cmath>
-using namespace std;
+#include <cctype>
 
-int minDistance(vector<int>& nums, int x, int y) {
-    int minDist = INT_MAX;
-    int prev = -1;
+bool isPalindrome(const std::string& str, int start, int end) {
+    if (start >= end)
+        return true;
 
-    for (int i = 0; i < nums.size(); i++) {
-        if (nums[i] == x || nums[i] == y) {
-            if (prev != -1 && nums[i] != nums[prev]) {
-                minDist = min(minDist, i - prev);
-            }
-            prev = i;
-        }
-    }
+    // Convert characters to lowercase for case-insensitive comparison
+    char left = std::tolower(str[start]);
+    char right = std::tolower(str[end]);
 
-    return minDist;
+    if (left != right)
+        return false;
+
+    // Move to the next pair of characters
+    return isPalindrome(str, start + 1, end - 1);
 }
 
 int main() {
-    int n;
-    cout << "Enter the number of elements: ";
-    cin >> n;
+    std::string input;
+    std::cout << "Enter a string: ";
+    std::getline(std::cin, input);
 
-    vector<int> nums(n);
-    cout << "Enter " << n << " integer numbers: ";
-    for (int i = 0; i < n; i++) {
-        cin >> nums[i];
-    }
+    bool result = isPalindrome(input, 0, input.length() - 1);
 
-    int x, y;
-    cout << "Enter two numbers x and y: ";
-    cin >> x >> y;
-
-    int distance = minDistance(nums, x, y);
-
-    cout << "Output: " << distance << endl;
+    if (result)
+        std::cout << "Output: 1\n"; // Palindrome
+    else
+        std::cout << "Output: 0\n"; // Not a palindrome
 
     return 0;
 }
