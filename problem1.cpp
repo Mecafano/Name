@@ -1,24 +1,24 @@
 #include <iostream>
 #include <iomanip>
-using namespace std;
 
 double calculate_an(int n) {
-    if (n == 1)
-        return 4.0;
-    else
-        return (calculate_an(n - 1) - 1.0) / 2.0;
+    double a = 4.0;
+    for (int i = 2; i <= n; ++i) {
+        a = 1.0 / (2 * a - 1);
+    }
+    return a;
 }
 
 int main() {
     int n;
-    cout << "Enter the value of n: ";
-    cin >> n;
-
-    cout << fixed << setprecision(10);
+    std::cout << "Enter the value of n: ";
+    std::cin >> n;
 
     double result = calculate_an(n);
-    cout << "a_" << n << " = " << result << endl;
+
+    std::cout << std::fixed << std::setprecision(10);
+
+    std::cout << "Output: " << result << std::endl;
 
     return 0;
 }
-
